@@ -78,4 +78,151 @@ Constantemente recibes notificaciones de diferentes aplicaciones: mensajes de te
 -- Cuando sucede un evento (llega un nuevo mensaje, hay una noticia de última hora), el celular "notifica" a todos los "observadores" que están "suscritos" a ese tipo de evento.
 -- Cada "observador" (aplicación), al recibir la notificación, reacciona de su propia manera (muestra un ícono, reproduce un sonido, etc.). Puedes "suscribirte" o "desuscribirte" fácilmente de las notificaciones de una aplicación sin afectar cómo funcionan las otras.
 
+## Ejercicio 4
 
+| Nombre principal | Clasificacion | Nombres Alternativos |
+|---|---|---|
+| Abstract Factory	 | Creacional | Kit, Fábrica de Fábricas, Fábrica Abstracta
+| Builder | Creacional | Constructor, Separador de Construcción 
+| Factory Method | Creacional | Método de Fábrica, Fábrica Virtual
+| Prototype | Creacional | Clonador, Prototipo
+| Singleton | Creacional | Instancia Única, Objeto Único, Dios Objeto (a veces como antipatrón)
+| Adapter | Estructural | Wrapper, Envoltorio, Clase Adaptadora, Object Adapter
+| Bridge | Estructural | Puente, Handle/Body
+| Composite | Estrctural | Composición, Objeto Compuesto
+| Decorator | Estructural | Envoltorio, Decorador de Objetos, Smart Proxy
+| Facade | Estructural | Fachada, Interfaz Simple, Sistema Subsistema
+| Flyweight | Estructural | Peso Ligero, Objeto Compartido
+| Proxy | Estructural | Sustituto, Apoderado, Delegado, Wrapper
+| Chain of Responsibility | Comportamiento | Cadena de Responsabilidad, Pipeline
+| Command | Comportamiento | Acción, Transacción
+| Interpreter | Comportamiento | Interprete
+| Iterator | Comportamiento | Cursor, Enumerador
+| Mediator | Comportamiento | Intermediario, Centro de Control
+| Memento | Comportamiento | Token, Instantánea
+| Observer | Comportamiento | Publicador-Subscriptor, Pub-Sub, Dependiente
+| State | Comportamiento | Objeto Estado, Máquina de Estados Objeto
+| Strategy | Comportamiento | Política, Algoritmo Intercambiable
+| Template Method | Comportamiento | Metodo Plantilla |
+| Visitor | Comportamiento | Visitante |
+
+
+
+## Ejercicio 5
+
+¿Qué son los Antipatrones de Diseño?
+Mientras que un patrón de diseño es una solución probada y recurrente a un problema común en el diseño de software, un antipatrón de diseño es lo opuesto. Un antipatrón es una solución comúnmente aplicada a un problema que, en realidad, resulta ineficaz y contraproducente, llevando a consecuencias negativas y a menudo difíciles de revertir en el sistema de software.
+
+En otras palabras, los antipatrones son "malas prácticas" o "soluciones fallidas" que se repiten con frecuencia en el desarrollo de software. Reconocerlos es tan importante como conocer los patrones, ya que ayuda a evitar errores comunes que pueden llevar a:
+- Mayor complejidad: El código se vuelve más difícil de entender y mantener.
+- Menor rendimiento: La aplicación puede volverse lenta o ineficiente.
+- Baja reusabilidad: Los componentes son difíciles de reutilizar en otras partes del sistema o en otros proyectos.
+- Dificultad en las pruebas: El código es complicado de probar de forma aislada.
+- Acoplamiento excesivo: Los componentes dependen demasiado unos de otros, haciendo los cambios muy riesgosos.
+- Baja cohesión: Las clases o módulos tienen responsabilidades mezcladas o poco relacionadas.
+
+Ejemplos Comunes de Antipatrones de Diseño
+Aquí te presento algunos de los antipatrones más conocidos y sus implicaciones:
+
+1. El Objeto Dios (God Object / God Class)
+- Descripción: Una clase que centraliza demasiadas responsabilidades y funcionalidades. Intenta hacer "demasiadas cosas" y tiene un conocimiento o control excesivo sobre otras partes del sistema.
+
+- Problema: Viola el Principio de Responsabilidad Única (SRP). Se convierte en un cuello de botella, es extremadamente difícil de probar, mantener y modificar. Cualquier cambio en una pequeña parte de su funcionalidad puede tener efectos secundarios inesperados en otras partes.
+
+- Ejemplo Concreto:
+Imagina una clase GestorSistema en una aplicación. Esta clase se encarga de:
+
+-Manejar la autenticación de usuarios.
+
+-Gestionar la base de datos (conexiones, consultas).
+
+-Procesar pagos.
+
+-Enviar correos electrónicos de notificación.
+
+-Generar informes.
+
+Si necesitas cambiar cómo se gestionan los pagos, es probable que tengas que modificar esta clase GestorSistema masiva, arriesgándote a introducir errores en la autenticación o el envío de correos. Además, probar solo la funcionalidad de pago de esta clase sería muy complicado.
+
+2. Lava Flow (Flujo de Lava)
+- Descripción: Partes del código que son "intocables" o extremadamente difíciles de modificar porque nadie entiende completamente cómo funcionan o por qué están ahí. A menudo, son secciones de código antiguas, mal documentadas o con dependencias ocultas.
+
+- Problema: Impide la evolución del software, aumenta el riesgo de introducir errores al intentar modificarlas y reduce la productividad, ya que los desarrolladores evitan interactuar con ellas.
+
+- Ejemplo Concreto:
+En un sistema heredado, existe un módulo CalculadorImpuestosLegado. Nadie en el equipo actual sabe exactamente cómo calcula los impuestos para todas las casuísticas, solo saben que "funciona" y que cualquier intento de refactorizarlo o tocarlo ha causado problemas en el pasado. El código está lleno de lógica compleja, sin comentarios y con nombres de variables crípticos. Es como un flujo de lava solidificado: está ahí, es parte del paisaje, pero es intocable.
+
+3. Acoplamiento de Concreto (Hard-coded Dependencies / Concrete Coupling)
+Descripción: Un módulo o clase depende directamente de la implementación concreta de otro módulo o clase, en lugar de depender de una interfaz o abstracción.
+
+- Problema: Viola el Principio de Inversión de Dependencias (DIP). Hace que el código sea rígido y difícil de cambiar. Si la implementación concreta cambia, todas las clases que dependen de ella deben ser modificadas. Dificulta enormemente las pruebas unitarias.
+
+- Ejemplo Concreto:
+Tienes una clase ProcesadorPedidos que necesita guardar los pedidos en una base de datos. En lugar de depender de una interfaz RepositorioPedidos, la clase ProcesadorPedidos crea directamente una instancia de BaseDeDatosMySQL:
+
+
+
+
+
+```
+python 
+class BaseDeDatosMySQL:
+    def guardar_pedido(self, pedido):
+        print(f"Guardando pedido en MySQL: {pedido}")
+
+class ProcesadorPedidos:
+    def __init__(self):
+        # Acoplamiento directo a la implementación concreta
+        self.db = BaseDeDatosMySQL()
+
+    def procesar(self, pedido):
+        # ... lógica de procesamiento ...
+        self.db.guardar_pedido(pedido)
+```
+
+Si más tarde decides cambiar a PostgreSQL o a una base de datos NoSQL, tendrías que modificar la clase ProcesadorPedidos (y cualquier otra clase que dependa directamente de BaseDeDatosMySQL). Además, es muy difícil probar ProcesadorPedidos sin una base de datos MySQL real.
+
+4. Bola de Barro (Spaghetti Code / Big Ball of Mud)
+- Descripción: Un sistema con una estructura desorganizada, sin una arquitectura clara, donde los componentes están fuertemente acoplados entre sí y la lógica de negocio se mezcla con la lógica de presentación y persistencia.
+
+- Problema: Es el resultado de la falta de diseño o de un diseño pobre. El sistema es extremadamente difícil de entender, mantener, escalar y refactorizar. Cada cambio es un riesgo de romper algo más.
+
+- Ejemplo Concreto:
+Un sistema web donde el código HTML, JavaScript, las consultas SQL y la lógica de negocio están todos mezclados en archivos PHP monolíticos. Una función puede acceder directamente a variables globales, modificar la interfaz de usuario y guardar datos en la base de datos, todo en el mismo bloque de código. No hay separación de capas ni de responsabilidades.
+
+5. El Problema del Yo-Yo (Yo-Yo Problem)
+- Descripción: Una jerarquía de herencia excesivamente profunda, donde para entender el comportamiento de un método, tienes que "saltar" arriba y abajo en la jerarquía de clases (como un yo-yo) para seguir la cadena de llamadas a super().
+
+- Problema: Dificulta la comprensión del código, el debugging y el mantenimiento. Los cambios en una clase base pueden tener efectos en cascada difíciles de prever.
+
+- Ejemplo Concreto:
+
+```
+python
+class Animal:
+    def hacer_sonido(self):
+        print("Sonido genérico de animal")
+
+class Mamifero(Animal):
+    def hacer_sonido(self):
+        super().hacer_sonido()
+        print("Sonido de mamífero")
+
+class Perro(Mamifero):
+    def hacer_sonido(self):
+        super().hacer_sonido()
+        print("Guau guau")
+
+class Labrador(Perro):
+    def hacer_sonido(self):
+        super().hacer_sonido()
+        print("Guau guau (Labrador)")
+
+# Para entender qué hace Labrador.hacer_sonido(),
+# tienes que seguir la cadena hasta Animal.
+lab = Labrador()
+lab.hacer_sonido()
+```
+Si esta jerarquía se extiende a 10 o 15 niveles, seguir el flujo de un método se vuelve una tarea tediosa y propensa a errores.
+
+Reconocer y evitar estos antipatrones es fundamental para construir software robusto, mantenible y escalable.
